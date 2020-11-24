@@ -10,7 +10,7 @@ https://solvimm.com/blog/como-construir-sua-primeira-api-na-nuvem-com-o-serverle
 
 ## Comandos
 
-Comando para gravar credencial localmente da AWS:
+#### Comando para gravar credencial localmente da AWS:
 ```
 serverless config credentials \
 --provider aws \
@@ -19,7 +19,7 @@ serverless config credentials \
 --profile my-aws-profile
 ```
 
-Comando para realizar deploy:
+#### Comando para realizar deploy:
 
 ```serverless deploy --aws-profile my-aws-profile```
 
@@ -52,7 +52,7 @@ api keys:
 Onde deve ser passado no header da requisição:
 ```x-api-key: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui```
 
-Comando para remover api em produção:
+#### Comando para remover api em produção:
 
 ```serverless remove --aws-profile my-aws-profile --stage dev```
 
