@@ -159,7 +159,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/api-python-hello/dev/1606247897512-2020-11-24T19:58:17.512Z/api-python-hello.zip"
+                "S3Key": "serverless/api-python-hello/dev/1606248586685-2020-11-24T20:09:46.685Z/api-python-hello.zip"
               },
               "FunctionName": "api-python-hello-dev-hello",
               "Handler": "src/item.hello_world",
@@ -177,14 +177,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionHe2JBjtIK8XLFCnZCB1wIBzhbkQDF2KHprHUg8uAoys": {
+          "HelloLambdaVersionbrsv1dQsuJy0Qja74BCKLyJQemjSjLFJQUVpAoyg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "o6zpUJgh9s6MruzaBAVrdCOrpU7u9uiVqG+ir2jXD44="
+              "CodeSha256": "sEHE9M3amoN0VMstD+yFUwGrZobD2+TTpuCXXlWajJM="
             }
           },
           "ApiGatewayRestApi": {
@@ -388,7 +388,7 @@
               ]
             }
           },
-          "ApiGatewayDeployment1606247895927": {
+          "ApiGatewayDeployment1606248585073": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -447,7 +447,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionHe2JBjtIK8XLFCnZCB1wIBzhbkQDF2KHprHUg8uAoys"
+              "Ref": "HelloLambdaVersionbrsv1dQsuJy0Qja74BCKLyJQemjSjLFJQUVpAoyg"
             }
           },
           "ServiceEndpoint": {
@@ -598,7 +598,7 @@
         "package": {},
         "memory": 256,
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionHe2JBjtIK8XLFCnZCB1wIBzhbkQDF2KHprHUg8uAoys"
+        "versionLogicalId": "HelloLambdaVersionbrsv1dQsuJy0Qja74BCKLyJQemjSjLFJQUVpAoyg"
       }
     },
     "configValidationMode": "warn",
@@ -616,10 +616,10 @@
       }
     },
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/media/tayron/HD Hitachi 320GB1/Desenvolvimento/npm-servless/serverless-first-api/.serverless/api-python-hello.zip"
+    "artifact": "/media/tayron/HD Hitachi 320GB1/Desenvolvimento/npm-servless/serverless-api-python/.serverless/api-python-hello.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/api-python-hello/dev/1606247897512-2020-11-24T19:58:17.512Z",
+    "artifactDirectoryName": "serverless/api-python-hello/dev/1606248586685-2020-11-24T20:09:46.685Z",
     "artifact": "api-python-hello.zip"
   }
 }
