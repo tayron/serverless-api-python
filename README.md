@@ -60,6 +60,8 @@ Chave da API deve ser passado no header da requisição:
 
 ## Requisição
 
+Exemplo de requisição para api:
+
 ```
 curl --request GET \
   --url https://7cq8ind2me.execute-api.us-east-1.amazonaws.com/dev/api/python/hello-world \
