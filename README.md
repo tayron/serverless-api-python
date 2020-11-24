@@ -6,7 +6,8 @@ Exemplo de uma API Serverless usando Serverless Framework e deploy no AWS utiliz
 - API Gateway
 
 ## Tutorial seguido
-https://solvimm.com/blog/como-construir-sua-primeira-api-na-nuvem-com-o-serverless-framework
+- https://solvimm.com/blog/como-construir-sua-primeira-api-na-nuvem-com-o-serverless-framework
+- https://solvimm.com/blog/como-adicionar-uma-chave-de-autorizacao-de-api-com-o-serverless-framework
 
 ## Comandos
 
