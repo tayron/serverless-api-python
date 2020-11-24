@@ -50,7 +50,8 @@ api keys:
   myKey: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui
 ```
 
-Onde deve ser passado no header da requisição:
+Chave da API deve ser passado no header da requisição:
+
 ```x-api-key: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui```
 
 #### Comando para remover api em produção:
