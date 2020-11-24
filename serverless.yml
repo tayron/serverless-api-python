@@ -1,10 +1,13 @@
-service: api-python-hello
+service: api-python-hello-world
 
 provider:
   name: aws
   region: us-east-1
   runtime: python3.7
   stage: dev
+  apiKeys:
+    - name: myKey
+
 functions:
   hello:
     handler: src/item.hello_world
@@ -13,6 +16,7 @@ functions:
     timeout: 20
     events:
       - http:
-          path: api/python/hello
+          path: api/python/hello-world
           method: get
-          integration: lambda  
+          integration: lambda
+          private: true  

@@ -59,7 +59,7 @@
     "HelloLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/api-python-hello-dev-hello"
+        "LogGroupName": "/aws/lambda/api-python-hello-world-dev-hello"
       }
     },
     "IamRoleLambdaExecution": {
@@ -87,7 +87,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "api-python-hello",
+                  "api-python-hello-world",
                   "dev",
                   "lambda"
                 ]
@@ -104,7 +104,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev*:*"
                     }
                   ]
                 },
@@ -115,7 +115,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev*:*:*"
                     }
                   ]
                 }
@@ -128,7 +128,7 @@
           "Fn::Join": [
             "-",
             [
-              "api-python-hello",
+              "api-python-hello-world",
               "dev",
               {
                 "Ref": "AWS::Region"
@@ -146,9 +146,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/api-python-hello/dev/1606248586685-2020-11-24T20:09:46.685Z/api-python-hello.zip"
+          "S3Key": "serverless/api-python-hello-world/dev/1606250373036-2020-11-24T20:39:33.036Z/api-python-hello-world.zip"
         },
-        "FunctionName": "api-python-hello-dev-hello",
+        "FunctionName": "api-python-hello-world-dev-hello",
         "Handler": "src/item.hello_world",
         "MemorySize": 256,
         "Role": {
@@ -164,20 +164,20 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersionbrsv1dQsuJy0Qja74BCKLyJQemjSjLFJQUVpAoyg": {
+    "HelloLambdaVersion17IOIygMGs2nmaA3r9vypDFb4y68JKXVJYQxmT6sU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "sEHE9M3amoN0VMstD+yFUwGrZobD2+TTpuCXXlWajJM="
+        "CodeSha256": "xUV5Bo8pL1R46jPSEfLDg6FHEMl6K0YNrTxoeX2D2BE="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-api-python-hello",
+        "Name": "dev-api-python-hello-world",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -213,30 +213,30 @@
         }
       }
     },
-    "ApiGatewayResourceApiPythonHello": {
+    "ApiGatewayResourceApiPythonHelloDashworld": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
           "Ref": "ApiGatewayResourceApiPython"
         },
-        "PathPart": "hello",
+        "PathPart": "hello-world",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       }
     },
-    "ApiGatewayMethodApiPythonHelloGet": {
+    "ApiGatewayMethodApiPythonHelloDashworldGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "GET",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceApiPythonHello"
+          "Ref": "ApiGatewayResourceApiPythonHelloDashworld"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "ApiKeyRequired": false,
+        "ApiKeyRequired": true,
         "AuthorizationType": "NONE",
         "Integration": {
           "IntegrationHttpMethod": "POST",
@@ -375,7 +375,7 @@
         ]
       }
     },
-    "ApiGatewayDeployment1606248585073": {
+    "ApiGatewayDeployment1606250371399": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -384,8 +384,52 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodApiPythonHelloGet"
+        "ApiGatewayMethodApiPythonHelloDashworldGet"
       ]
+    },
+    "ApiGatewayApiKey1": {
+      "Type": "AWS::ApiGateway::ApiKey",
+      "Properties": {
+        "Enabled": true,
+        "Name": "myKey",
+        "StageKeys": [
+          {
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "StageName": "dev"
+          }
+        ]
+      },
+      "DependsOn": "ApiGatewayDeployment1606250371399"
+    },
+    "ApiGatewayUsagePlan": {
+      "Type": "AWS::ApiGateway::UsagePlan",
+      "DependsOn": "ApiGatewayDeployment1606250371399",
+      "Properties": {
+        "ApiStages": [
+          {
+            "ApiId": {
+              "Ref": "ApiGatewayRestApi"
+            },
+            "Stage": "dev"
+          }
+        ],
+        "Description": "Usage plan for api-python-hello-world dev stage",
+        "UsagePlanName": "api-python-hello-world-dev"
+      }
+    },
+    "ApiGatewayUsagePlanKey1": {
+      "Type": "AWS::ApiGateway::UsagePlanKey",
+      "Properties": {
+        "KeyId": {
+          "Ref": "ApiGatewayApiKey1"
+        },
+        "KeyType": "API_KEY",
+        "UsagePlanId": {
+          "Ref": "ApiGatewayUsagePlan"
+        }
+      }
     },
     "HelloLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
@@ -434,7 +478,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionbrsv1dQsuJy0Qja74BCKLyJQemjSjLFJQUVpAoyg"
+        "Ref": "HelloLambdaVersion17IOIygMGs2nmaA3r9vypDFb4y68JKXVJYQxmT6sU"
       }
     },
     "ServiceEndpoint": {
