@@ -2,6 +2,7 @@ service: api-python-hello-world
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  contactTable: dynamo-${self:custom.stage}-contact-table
 
 provider:
   name: aws
@@ -13,7 +14,7 @@ provider:
 
 functions:
   hello:
-    handler: src/item.hello_world
+    handler: src/hello.hello_world
     runtime: ${self:provider.runtime}
     memorySize: 256
     timeout: 20
@@ -23,3 +24,40 @@ functions:
           method: get
           integration: lambda
           private: true  
+
+  contact-post:
+    handler: src/contact.create
+    environment:
+      TABLE: ${self:custom.contactTable}
+    runtime: ${self:provider.runtime}
+    memorySize: 256
+    timeout: 20
+    events:
+      - http:
+          path: contact
+          method: post          
+          integration: lambda
+          private: true
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource:
+          - !GetAtt ContactTable.Arn          
+
+resources:
+  - Resources:
+      ContactTable:
+        Type: 'AWS::DynamoDB::Table'
+        Properties:
+          AttributeDefinitions:
+            - AttributeName: id
+              AttributeType: S
+          KeySchema:
+            - AttributeName: id
+              KeyType: HASH
+          BillingMode: PAY_PER_REQUEST
+          TableName: ${self:custom.contactTable}    
+
+plugins:
+  - serverless-iam-roles-per-function                

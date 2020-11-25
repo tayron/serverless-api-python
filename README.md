@@ -8,6 +8,8 @@ Exemplo de uma API Serverless usando Serverless Framework e deploy no AWS utiliz
 ## Tutorial seguido
 - https://solvimm.com/blog/como-construir-sua-primeira-api-na-nuvem-com-o-serverless-framework
 - https://solvimm.com/blog/como-adicionar-uma-chave-de-autorizacao-de-api-com-o-serverless-framework
+- https://solvimm.com/blog/como-usar-variaveis-com-o-serverless-framework
+- https://solvimm.com/blog/integracao-de-api-com-dynamodb-utilizando-o-serverless-framework
 
 ## Comandos
 
@@ -21,6 +23,9 @@ serverless config credentials \
 ```
 
 #### Comando para realizar deploy:
+
+##### Dependências
+- ```npm install serverless-iam-roles-per-function```
 
 Para fazer deploy e manter o stage padrão: **dev**
 ```serverless deploy --aws-profile my-aws-profile```

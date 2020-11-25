@@ -11,7 +11,7 @@
       "stage": "dev",
       "apiKeys": [
         {
-          "name": "homologacao-myKey"
+          "name": "test-myKey"
         }
       ],
       "variableSyntax": "\\${([^{}:]+?(?:\\(|:)(?:[^:{}][^{}]*?)?)}",
@@ -77,7 +77,13 @@
           "HelloLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/api-python-hello-world-homologacao-hello"
+              "LogGroupName": "/aws/lambda/api-python-hello-world-test-hello"
+            }
+          },
+          "ContactDashpostLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/api-python-hello-world-test-contact-post"
             }
           },
           "IamRoleLambdaExecution": {
@@ -106,7 +112,7 @@
                       "-",
                       [
                         "api-python-hello-world",
-                        "homologacao",
+                        "test",
                         "lambda"
                       ]
                     ]
@@ -122,7 +128,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-homologacao*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test*:*"
                           }
                         ]
                       },
@@ -133,7 +139,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-homologacao*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test*:*:*"
                           }
                         ]
                       }
@@ -147,7 +153,7 @@
                   "-",
                   [
                     "api-python-hello-world",
-                    "homologacao",
+                    "test",
                     {
                       "Ref": "AWS::Region"
                     },
@@ -164,10 +170,10 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/api-python-hello-world/homologacao/1606308726502-2020-11-25T12:52:06.502Z/api-python-hello-world.zip"
+                "S3Key": "serverless/api-python-hello-world/test/1606324771584-2020-11-25T17:19:31.584Z/api-python-hello-world.zip"
               },
-              "FunctionName": "api-python-hello-world-homologacao-hello",
-              "Handler": "src/item.hello_world",
+              "FunctionName": "api-python-hello-world-test-hello",
+              "Handler": "src/hello.hello_world",
               "MemorySize": 256,
               "Role": {
                 "Fn::GetAtt": [
@@ -182,20 +188,61 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersiontl1PaqUWQaUSV63k1OivjVUiGn2YxNU8rVBD67hdzS0": {
+          "HelloLambdaVersion9rqiR7cBPkjJinUhZgaAp7ahssGZwxNa2xZSXfQQU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "/tharYWbigYLNY+e6E4mtpjAwxqbS7GB65Kwd9V0bUc="
+              "CodeSha256": "CPOTOjFWut6TiOTk0LEe+pZBLfyk8fmFRYRDROFLDM4="
+            }
+          },
+          "ContactDashpostLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/api-python-hello-world/test/1606324771584-2020-11-25T17:19:31.584Z/api-python-hello-world.zip"
+              },
+              "FunctionName": "api-python-hello-world-test-contact-post",
+              "Handler": "src/contact.create",
+              "MemorySize": 256,
+              "Role": {
+                "Fn::GetAtt": [
+                  "ContactDashpostIamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "python3.7",
+              "Timeout": 20,
+              "Environment": {
+                "Variables": {
+                  "TABLE": "dynamo-test-contact-table"
+                }
+              }
+            },
+            "DependsOn": [
+              "ContactDashpostIamRoleLambdaExecution",
+              "ContactDashpostLogGroup"
+            ]
+          },
+          "ContactDashpostLambdaVersionRwBCjL9uB5Y5qwlDEUTd48SbWED9RZXsDhvgJ73VCE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ContactDashpostLambdaFunction"
+              },
+              "CodeSha256": "CPOTOjFWut6TiOTk0LEe+pZBLfyk8fmFRYRDROFLDM4="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "homologacao-api-python-hello-world",
+              "Name": "test-api-python-hello-world",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -238,6 +285,21 @@
                 "Ref": "ApiGatewayResourceApiPython"
               },
               "PathPart": "hello-world",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceContact": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "contact",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -393,48 +455,199 @@
               ]
             }
           },
-          "ApiGatewayDeployment1606308724338": {
+          "ApiGatewayMethodContactPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceContact"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": true,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ContactDashpostLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                },
+                "PassthroughBehavior": "NEVER",
+                "RequestTemplates": {
+                  "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  ",
+                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
+                },
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "SelectionPattern": "",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "400",
+                    "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "401",
+                    "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "403",
+                    "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "404",
+                    "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "422",
+                    "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "500",
+                    "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "502",
+                    "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": "504",
+                    "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
+                    "ResponseParameters": {},
+                    "ResponseTemplates": {}
+                  }
+                ]
+              },
+              "MethodResponses": [
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "200"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "400"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "401"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "403"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "404"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "422"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "500"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "502"
+                },
+                {
+                  "ResponseParameters": {},
+                  "ResponseModels": {},
+                  "StatusCode": "504"
+                }
+              ]
+            }
+          },
+          "ApiGatewayDeployment1606324767133": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "StageName": "homologacao"
+              "StageName": "test"
             },
             "DependsOn": [
-              "ApiGatewayMethodApiPythonHelloDashworldGet"
+              "ApiGatewayMethodApiPythonHelloDashworldGet",
+              "ApiGatewayMethodContactPost"
             ]
           },
           "ApiGatewayApiKey1": {
             "Type": "AWS::ApiGateway::ApiKey",
             "Properties": {
               "Enabled": true,
-              "Name": "homologacao-myKey",
+              "Name": "test-myKey",
               "StageKeys": [
                 {
                   "RestApiId": {
                     "Ref": "ApiGatewayRestApi"
                   },
-                  "StageName": "homologacao"
+                  "StageName": "test"
                 }
               ]
             },
-            "DependsOn": "ApiGatewayDeployment1606308724338"
+            "DependsOn": "ApiGatewayDeployment1606324767133"
           },
           "ApiGatewayUsagePlan": {
             "Type": "AWS::ApiGateway::UsagePlan",
-            "DependsOn": "ApiGatewayDeployment1606308724338",
+            "DependsOn": "ApiGatewayDeployment1606324767133",
             "Properties": {
               "ApiStages": [
                 {
                   "ApiId": {
                     "Ref": "ApiGatewayRestApi"
                   },
-                  "Stage": "homologacao"
+                  "Stage": "test"
                 }
               ],
-              "Description": "Usage plan for api-python-hello-world homologacao stage",
-              "UsagePlanName": "api-python-hello-world-homologacao"
+              "Description": "Usage plan for api-python-hello-world test stage",
+              "UsagePlanName": "api-python-hello-world-test"
             }
           },
           "ApiGatewayUsagePlanKey1": {
@@ -485,6 +698,144 @@
                 ]
               }
             }
+          },
+          "ContactDashpostLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ContactDashpostLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ContactDashpostIamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "api-python-hello-world",
+                        "test",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test-contact-post:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:PutItem"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::GetAtt": [
+                              "ContactTable",
+                              "Arn"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "api-python-hello-world",
+                    "test",
+                    "contact-post",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              },
+              "ManagedPolicyArns": []
+            }
+          },
+          "ContactTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST",
+              "TableName": "dynamo-test-contact-table"
+            }
           }
         },
         "Outputs": {
@@ -496,7 +847,13 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersiontl1PaqUWQaUSV63k1OivjVUiGn2YxNU8rVBD67hdzS0"
+              "Ref": "HelloLambdaVersion9rqiR7cBPkjJinUhZgaAp7ahssGZwxNa2xZSXfQQU"
+            }
+          },
+          "ContactDashpostLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ContactDashpostLambdaVersionRwBCjL9uB5Y5qwlDEUTd48SbWED9RZXsDhvgJ73VCE"
             }
           },
           "ServiceEndpoint": {
@@ -517,7 +874,7 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/homologacao"
+                  "/test"
                 ]
               ]
             }
@@ -594,12 +951,16 @@
       "vpc": {}
     },
     "custom": {
-      "stage": "homologacao"
+      "stage": "test",
+      "contactTable": "dynamo-test-contact-table"
     },
+    "plugins": [
+      "serverless-iam-roles-per-function"
+    ],
     "pluginsData": {},
     "functions": {
       "hello": {
-        "handler": "src/item.hello_world",
+        "handler": "src/hello.hello_world",
         "runtime": "python3.7",
         "memorySize": 256,
         "timeout": 20,
@@ -647,12 +1008,73 @@
             }
           }
         ],
-        "name": "api-python-hello-world-homologacao-hello",
+        "name": "api-python-hello-world-test-hello",
         "package": {},
         "memory": 256,
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersiontl1PaqUWQaUSV63k1OivjVUiGn2YxNU8rVBD67hdzS0"
+        "versionLogicalId": "HelloLambdaVersion9rqiR7cBPkjJinUhZgaAp7ahssGZwxNa2xZSXfQQU"
+      },
+      "contact-post": {
+        "handler": "src/contact.create",
+        "environment": {
+          "TABLE": "dynamo-test-contact-table"
+        },
+        "runtime": "python3.7",
+        "memorySize": 256,
+        "timeout": 20,
+        "events": [
+          {
+            "http": {
+              "path": "contact",
+              "method": "post",
+              "integration": "AWS",
+              "private": true,
+              "request": {
+                "passThrough": "NEVER"
+              },
+              "response": {
+                "statusCodes": {
+                  "$ref": "$[\"service\"][\"functions\"][\"hello\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
+                }
+              }
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ContactDashpostIamRoleLambdaExecution\"][\"Properties\"][\"Policies\"][0][\"PolicyDocument\"][\"Statement\"][1]"
+          }
+        ],
+        "name": "api-python-hello-world-test-contact-post",
+        "package": {},
+        "memory": 256,
+        "vpc": {},
+        "versionLogicalId": "ContactDashpostLambdaVersionRwBCjL9uB5Y5qwlDEUTd48SbWED9RZXsDhvgJ73VCE"
       }
+    },
+    "resources": {
+      "Resources": {
+        "ContactTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST",
+            "TableName": "dynamo-test-contact-table"
+          }
+        }
+      },
+      "Outputs": {}
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
@@ -669,13 +1091,19 @@
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
+      },
+      "plugins": {
+        "$ref": "$[\"service\"][\"plugins\"]"
       }
     },
     "isDashboardMonitoringPreconfigured": false,
     "artifact": "/media/tayron/HD Hitachi 320GB1/Desenvolvimento/npm-servless/serverless-api-python/.serverless/api-python-hello-world.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/api-python-hello-world/homologacao/1606308726502-2020-11-25T12:52:06.502Z",
+    "artifactDirectoryName": "serverless/api-python-hello-world/test/1606324771584-2020-11-25T17:19:31.584Z",
     "artifact": "api-python-hello-world.zip"
   }
 }

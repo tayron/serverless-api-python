@@ -1,0 +1,23 @@
+{
+  "name": "serverless-api-python",
+  "version": "1.0.0",
+  "description": "## Descrição Exemplo de uma API Serverless usando Serverless Framework e deploy no AWS utilizando os serviços: - AWS Lambda - API Gateway",
+  "main": "index.js",
+  "dependencies": {
+    "serverless-iam-roles-per-function": "^3.0.0-d84bffd"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tayron/serverless-api-python.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tayron/serverless-api-python/issues"
+  },
+  "homepage": "https://github.com/tayron/serverless-api-python#readme"
+}
