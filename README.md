@@ -4,6 +4,7 @@
 Exemplo de uma API Serverless usando Serverless Framework e deploy no AWS utilizando os serviços:
 - AWS Lambda
 - API Gateway
+- DynamoDB
 
 ## Tutorial seguido
 - https://solvimm.com/blog/como-construir-sua-primeira-api-na-nuvem-com-o-serverless-framework
