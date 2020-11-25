@@ -30,3 +30,27 @@ def create(event, context):
         "status": 422,
         "body": "Nenhum nome ou telefone foi informado"
     }
+
+def list(event, context):
+    table = get_dynamo_table()
+    return table.scan()['Items']
+
+def remove(event, context):
+    body = event["body"]
+
+    if "id" in body:
+        table = get_dynamo_table()
+        
+        table.delete_item(
+            Key={"id": body["id"]}
+        )
+
+        return {
+            "status": 200,
+            "body": "OK"
+        }
+
+    return {
+        "status": 422,
+        "body": "Nenhum id do contato informado"
+    }

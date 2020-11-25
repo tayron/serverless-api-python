@@ -43,7 +43,47 @@ functions:
         Action:
           - "dynamodb:PutItem"
         Resource:
-          - !GetAtt ContactTable.Arn          
+          - !GetAtt ContactTable.Arn  
+
+  contact-get:
+    handler: src/contact.list
+    environment:
+      TABLE: ${self:custom.contactTable}
+    runtime: ${self:provider.runtime}
+    memorySize: 256
+    timeout: 20
+    events:
+      - http:
+          path: contact
+          method: get
+          private: true
+          integration: lambda
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource:
+          - !GetAtt ContactTable.Arn
+
+  contact-delete:
+    handler: src/contact.remove
+    environment:
+      TABLE: ${self:custom.contactTable}
+    runtime: ${self:provider.runtime}
+    memorySize: 256
+    timeout: 20
+    events:
+      - http:
+          path: contact
+          method: delete
+          private: true
+          integration: lambda
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource:
+          - !GetAtt ContactTable.Arn                  
 
 resources:
   - Resources:
