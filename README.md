@@ -22,7 +22,11 @@ serverless config credentials \
 
 #### Comando para realizar deploy:
 
+Para fazer deploy e manter o stage padrão: **dev**
 ```serverless deploy --aws-profile my-aws-profile```
+
+Para fazer deploy e alterar o stage padrão: **dev** para **prod**
+```serverless deploy --aws-profile my-aws-profile --stage prod```
 
 O resultado do comando será algo parecido com 
 ```

@@ -59,7 +59,7 @@
     "HelloLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/api-python-hello-world-dev-hello"
+        "LogGroupName": "/aws/lambda/api-python-hello-world-homologacao-hello"
       }
     },
     "IamRoleLambdaExecution": {
@@ -88,7 +88,7 @@
                 "-",
                 [
                   "api-python-hello-world",
-                  "dev",
+                  "homologacao",
                   "lambda"
                 ]
               ]
@@ -104,7 +104,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-homologacao*:*"
                     }
                   ]
                 },
@@ -115,7 +115,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-homologacao*:*:*"
                     }
                   ]
                 }
@@ -129,7 +129,7 @@
             "-",
             [
               "api-python-hello-world",
-              "dev",
+              "homologacao",
               {
                 "Ref": "AWS::Region"
               },
@@ -146,9 +146,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/api-python-hello-world/dev/1606250373036-2020-11-24T20:39:33.036Z/api-python-hello-world.zip"
+          "S3Key": "serverless/api-python-hello-world/homologacao/1606308726502-2020-11-25T12:52:06.502Z/api-python-hello-world.zip"
         },
-        "FunctionName": "api-python-hello-world-dev-hello",
+        "FunctionName": "api-python-hello-world-homologacao-hello",
         "Handler": "src/item.hello_world",
         "MemorySize": 256,
         "Role": {
@@ -164,20 +164,20 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersion17IOIygMGs2nmaA3r9vypDFb4y68JKXVJYQxmT6sU": {
+    "HelloLambdaVersiontl1PaqUWQaUSV63k1OivjVUiGn2YxNU8rVBD67hdzS0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "xUV5Bo8pL1R46jPSEfLDg6FHEMl6K0YNrTxoeX2D2BE="
+        "CodeSha256": "/tharYWbigYLNY+e6E4mtpjAwxqbS7GB65Kwd9V0bUc="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-api-python-hello-world",
+        "Name": "homologacao-api-python-hello-world",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -375,13 +375,13 @@
         ]
       }
     },
-    "ApiGatewayDeployment1606250371399": {
+    "ApiGatewayDeployment1606308724338": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "homologacao"
       },
       "DependsOn": [
         "ApiGatewayMethodApiPythonHelloDashworldGet"
@@ -391,32 +391,32 @@
       "Type": "AWS::ApiGateway::ApiKey",
       "Properties": {
         "Enabled": true,
-        "Name": "myKey",
+        "Name": "homologacao-myKey",
         "StageKeys": [
           {
             "RestApiId": {
               "Ref": "ApiGatewayRestApi"
             },
-            "StageName": "dev"
+            "StageName": "homologacao"
           }
         ]
       },
-      "DependsOn": "ApiGatewayDeployment1606250371399"
+      "DependsOn": "ApiGatewayDeployment1606308724338"
     },
     "ApiGatewayUsagePlan": {
       "Type": "AWS::ApiGateway::UsagePlan",
-      "DependsOn": "ApiGatewayDeployment1606250371399",
+      "DependsOn": "ApiGatewayDeployment1606308724338",
       "Properties": {
         "ApiStages": [
           {
             "ApiId": {
               "Ref": "ApiGatewayRestApi"
             },
-            "Stage": "dev"
+            "Stage": "homologacao"
           }
         ],
-        "Description": "Usage plan for api-python-hello-world dev stage",
-        "UsagePlanName": "api-python-hello-world-dev"
+        "Description": "Usage plan for api-python-hello-world homologacao stage",
+        "UsagePlanName": "api-python-hello-world-homologacao"
       }
     },
     "ApiGatewayUsagePlanKey1": {
@@ -478,7 +478,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersion17IOIygMGs2nmaA3r9vypDFb4y68JKXVJYQxmT6sU"
+        "Ref": "HelloLambdaVersiontl1PaqUWQaUSV63k1OivjVUiGn2YxNU8rVBD67hdzS0"
       }
     },
     "ServiceEndpoint": {
@@ -499,7 +499,7 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/homologacao"
           ]
         ]
       }

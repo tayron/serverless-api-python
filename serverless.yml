@@ -1,17 +1,20 @@
 service: api-python-hello-world
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
 provider:
   name: aws
   region: us-east-1
   runtime: python3.7
   stage: dev
   apiKeys:
-    - name: myKey
+    - name: ${self:custom.stage}-myKey
 
 functions:
   hello:
     handler: src/item.hello_world
-    runtime: python3.7
+    runtime: ${self:provider.runtime}
     memorySize: 256
     timeout: 20
     events:
