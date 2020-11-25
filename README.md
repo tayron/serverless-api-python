@@ -69,10 +69,35 @@ Chave da API deve ser passado no header da requisição:
 
 ## Requisição
 
-Exemplo de requisição para api:
+### Exemplo de requisição na API para exibir o Helo World:
 
 ```
 curl --request GET \
   --url https://7cq8ind2me.execute-api.us-east-1.amazonaws.com/dev/api/python/hello-world \
-  --header 'x-api-key: CCJZLX0pQZ9zrbxi0shwR8e2Yz0bOG6A5hlJc7Ui'
+  --header 'x-api-key: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui'
+```
+
+### Exemplo de requisição na API para listar todos os contatos:
+```
+curl -X GET
+-H "x-api-key: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui" \
+https://8nncm9w4p5.execute-api.us-east-1.amazonaws.com/dev/contact
+```
+
+### Exemplo de requisição na API para cadastrar um contato:
+```
+curl -X POST
+-H "x-api-key: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui" \
+-H "Content-Type: application/json" \
+-d '{"name":"Lina Nathan", "phone":"90000-0000"}' \
+https://8nncm9w4p5.execute-api.us-east-1.amazonaws.com/dev/contact
+```
+
+### Exemplo de requisição na API para excluir um contato:
+```
+curl -X DELETE
+-H "x-api-key: CCJZsdfgzrbxi0shwR8e2Yasdfaz0bOG6A5hlJc7Ui" \
+-H "Content-Type: application/json" \
+-d '{"id":"29a64dab-b77a-4b5f-9e82-222950c3b5ff"}' \
+https://8nncm9w4p5.execute-api.us-east-1.amazonaws.com/dev/contact
 ```
