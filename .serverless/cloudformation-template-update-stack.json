@@ -59,25 +59,25 @@
     "HelloLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/api-python-hello-world-test-hello"
+        "LogGroupName": "/aws/lambda/api-python-hello-world-dev-hello"
       }
     },
     "ContactDashpostLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/api-python-hello-world-test-contact-post"
+        "LogGroupName": "/aws/lambda/api-python-hello-world-dev-contact-post"
       }
     },
     "ContactDashgetLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/api-python-hello-world-test-contact-get"
+        "LogGroupName": "/aws/lambda/api-python-hello-world-dev-contact-get"
       }
     },
     "ContactDashdeleteLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/api-python-hello-world-test-contact-delete"
+        "LogGroupName": "/aws/lambda/api-python-hello-world-dev-contact-delete"
       }
     },
     "IamRoleLambdaExecution": {
@@ -106,7 +106,7 @@
                 "-",
                 [
                   "api-python-hello-world",
-                  "test",
+                  "dev",
                   "lambda"
                 ]
               ]
@@ -122,7 +122,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev*:*"
                     }
                   ]
                 },
@@ -133,7 +133,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev*:*:*"
                     }
                   ]
                 }
@@ -147,7 +147,7 @@
             "-",
             [
               "api-python-hello-world",
-              "test",
+              "dev",
               {
                 "Ref": "AWS::Region"
               },
@@ -164,9 +164,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/api-python-hello-world/test/1606327324886-2020-11-25T18:02:04.886Z/api-python-hello-world.zip"
+          "S3Key": "serverless/api-python-hello-world/dev/1606336565963-2020-11-25T20:36:05.963Z/api-python-hello-world.zip"
         },
-        "FunctionName": "api-python-hello-world-test-hello",
+        "FunctionName": "api-python-hello-world-dev-hello",
         "Handler": "src/hello.hello_world",
         "MemorySize": 256,
         "Role": {
@@ -182,14 +182,14 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersionwg2uKe9HXqzzMGlJ31qnc16rUC6t9eNGGQvfNqb3L4": {
+    "HelloLambdaVersionLvQjVpvxjU013CEdWmetK1S0aiy1kHhT57UEdW6rQKo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "X0Xbo+ZIg+q06vMjL+cZNVb4KXd0dFGVSLyaJb5jwZc="
+        "CodeSha256": "0vAsap0wcrNfXiDNAu7hLl0xbNzpvmquQePbLvZYAN8="
       }
     },
     "ContactDashpostLambdaFunction": {
@@ -199,9 +199,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/api-python-hello-world/test/1606327324886-2020-11-25T18:02:04.886Z/api-python-hello-world.zip"
+          "S3Key": "serverless/api-python-hello-world/dev/1606336565963-2020-11-25T20:36:05.963Z/api-python-hello-world.zip"
         },
-        "FunctionName": "api-python-hello-world-test-contact-post",
+        "FunctionName": "api-python-hello-world-dev-contact-post",
         "Handler": "src/contact.create",
         "MemorySize": 256,
         "Role": {
@@ -214,7 +214,7 @@
         "Timeout": 20,
         "Environment": {
           "Variables": {
-            "TABLE": "dynamo-test-contact-table"
+            "TABLE": "dynamo-dev-contact-table"
           }
         }
       },
@@ -223,14 +223,14 @@
         "ContactDashpostLogGroup"
       ]
     },
-    "ContactDashpostLambdaVersionUgbW7w3ABc1hzQmqUNkpQYOmz2mKGo5KX4Q7LRvMU": {
+    "ContactDashpostLambdaVersiondI226wwecse86nVlv2zf4qj1JAFP96DN5ORH9NEhk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ContactDashpostLambdaFunction"
         },
-        "CodeSha256": "X0Xbo+ZIg+q06vMjL+cZNVb4KXd0dFGVSLyaJb5jwZc="
+        "CodeSha256": "0vAsap0wcrNfXiDNAu7hLl0xbNzpvmquQePbLvZYAN8="
       }
     },
     "ContactDashgetLambdaFunction": {
@@ -240,9 +240,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/api-python-hello-world/test/1606327324886-2020-11-25T18:02:04.886Z/api-python-hello-world.zip"
+          "S3Key": "serverless/api-python-hello-world/dev/1606336565963-2020-11-25T20:36:05.963Z/api-python-hello-world.zip"
         },
-        "FunctionName": "api-python-hello-world-test-contact-get",
+        "FunctionName": "api-python-hello-world-dev-contact-get",
         "Handler": "src/contact.list",
         "MemorySize": 256,
         "Role": {
@@ -255,7 +255,7 @@
         "Timeout": 20,
         "Environment": {
           "Variables": {
-            "TABLE": "dynamo-test-contact-table"
+            "TABLE": "dynamo-dev-contact-table"
           }
         }
       },
@@ -264,14 +264,14 @@
         "ContactDashgetLogGroup"
       ]
     },
-    "ContactDashgetLambdaVersionJkV9rDOthWJUhyhJH9VjPH4VenC0BdmTfDJA89Kg3pI": {
+    "ContactDashgetLambdaVersionUWJrAddQxUEV6eTc5Mi33ZwlUXW8ukOZAovqJGPUPec": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ContactDashgetLambdaFunction"
         },
-        "CodeSha256": "X0Xbo+ZIg+q06vMjL+cZNVb4KXd0dFGVSLyaJb5jwZc="
+        "CodeSha256": "0vAsap0wcrNfXiDNAu7hLl0xbNzpvmquQePbLvZYAN8="
       }
     },
     "ContactDashdeleteLambdaFunction": {
@@ -281,9 +281,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/api-python-hello-world/test/1606327324886-2020-11-25T18:02:04.886Z/api-python-hello-world.zip"
+          "S3Key": "serverless/api-python-hello-world/dev/1606336565963-2020-11-25T20:36:05.963Z/api-python-hello-world.zip"
         },
-        "FunctionName": "api-python-hello-world-test-contact-delete",
+        "FunctionName": "api-python-hello-world-dev-contact-delete",
         "Handler": "src/contact.remove",
         "MemorySize": 256,
         "Role": {
@@ -296,7 +296,7 @@
         "Timeout": 20,
         "Environment": {
           "Variables": {
-            "TABLE": "dynamo-test-contact-table"
+            "TABLE": "dynamo-dev-contact-table"
           }
         }
       },
@@ -305,20 +305,20 @@
         "ContactDashdeleteLogGroup"
       ]
     },
-    "ContactDashdeleteLambdaVersionp6cqcTiCrSpNODX0FZ3UOwmYHO00I2ezDf9GPwsjg": {
+    "ContactDashdeleteLambdaVersionZ6tDmn9C9u1RPN74b0gSdvqccMHs8h63VU7xtZCT8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ContactDashdeleteLambdaFunction"
         },
-        "CodeSha256": "X0Xbo+ZIg+q06vMjL+cZNVb4KXd0dFGVSLyaJb5jwZc="
+        "CodeSha256": "0vAsap0wcrNfXiDNAu7hLl0xbNzpvmquQePbLvZYAN8="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "test-api-python-hello-world",
+        "Name": "dev-api-python-hello-world",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -981,13 +981,13 @@
         ]
       }
     },
-    "ApiGatewayDeployment1606327320921": {
+    "ApiGatewayDeployment1606336554673": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "test"
+        "StageName": "dev"
       },
       "DependsOn": [
         "ApiGatewayMethodApiPythonHelloDashworldGet",
@@ -1000,32 +1000,32 @@
       "Type": "AWS::ApiGateway::ApiKey",
       "Properties": {
         "Enabled": true,
-        "Name": "test-myKey",
+        "Name": "dev-myKey",
         "StageKeys": [
           {
             "RestApiId": {
               "Ref": "ApiGatewayRestApi"
             },
-            "StageName": "test"
+            "StageName": "dev"
           }
         ]
       },
-      "DependsOn": "ApiGatewayDeployment1606327320921"
+      "DependsOn": "ApiGatewayDeployment1606336554673"
     },
     "ApiGatewayUsagePlan": {
       "Type": "AWS::ApiGateway::UsagePlan",
-      "DependsOn": "ApiGatewayDeployment1606327320921",
+      "DependsOn": "ApiGatewayDeployment1606336554673",
       "Properties": {
         "ApiStages": [
           {
             "ApiId": {
               "Ref": "ApiGatewayRestApi"
             },
-            "Stage": "test"
+            "Stage": "dev"
           }
         ],
-        "Description": "Usage plan for api-python-hello-world test stage",
-        "UsagePlanName": "api-python-hello-world-test"
+        "Description": "Usage plan for api-python-hello-world dev stage",
+        "UsagePlanName": "api-python-hello-world-dev"
       }
     },
     "ApiGatewayUsagePlanKey1": {
@@ -1214,7 +1214,7 @@
                 "-",
                 [
                   "api-python-hello-world",
-                  "test",
+                  "dev",
                   "lambda"
                 ]
               ]
@@ -1230,7 +1230,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test-contact-post:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev-contact-post:*:*"
                     }
                   ]
                 },
@@ -1258,7 +1258,7 @@
             "-",
             [
               "api-python-hello-world",
-              "test",
+              "dev",
               "contact-post",
               {
                 "Ref": "AWS::Region"
@@ -1296,7 +1296,7 @@
                 "-",
                 [
                   "api-python-hello-world",
-                  "test",
+                  "dev",
                   "lambda"
                 ]
               ]
@@ -1312,7 +1312,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test-contact-get:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev-contact-get:*:*"
                     }
                   ]
                 },
@@ -1340,7 +1340,7 @@
             "-",
             [
               "api-python-hello-world",
-              "test",
+              "dev",
               "contact-get",
               {
                 "Ref": "AWS::Region"
@@ -1378,7 +1378,7 @@
                 "-",
                 [
                   "api-python-hello-world",
-                  "test",
+                  "dev",
                   "lambda"
                 ]
               ]
@@ -1394,7 +1394,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-test-contact-delete:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/api-python-hello-world-dev-contact-delete:*:*"
                     }
                   ]
                 },
@@ -1422,7 +1422,7 @@
             "-",
             [
               "api-python-hello-world",
-              "test",
+              "dev",
               "contact-delete",
               {
                 "Ref": "AWS::Region"
@@ -1450,7 +1450,7 @@
           }
         ],
         "BillingMode": "PAY_PER_REQUEST",
-        "TableName": "dynamo-test-contact-table"
+        "TableName": "dynamo-dev-contact-table"
       }
     }
   },
@@ -1463,25 +1463,25 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionwg2uKe9HXqzzMGlJ31qnc16rUC6t9eNGGQvfNqb3L4"
+        "Ref": "HelloLambdaVersionLvQjVpvxjU013CEdWmetK1S0aiy1kHhT57UEdW6rQKo"
       }
     },
     "ContactDashpostLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ContactDashpostLambdaVersionUgbW7w3ABc1hzQmqUNkpQYOmz2mKGo5KX4Q7LRvMU"
+        "Ref": "ContactDashpostLambdaVersiondI226wwecse86nVlv2zf4qj1JAFP96DN5ORH9NEhk"
       }
     },
     "ContactDashgetLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ContactDashgetLambdaVersionJkV9rDOthWJUhyhJH9VjPH4VenC0BdmTfDJA89Kg3pI"
+        "Ref": "ContactDashgetLambdaVersionUWJrAddQxUEV6eTc5Mi33ZwlUXW8ukOZAovqJGPUPec"
       }
     },
     "ContactDashdeleteLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ContactDashdeleteLambdaVersionp6cqcTiCrSpNODX0FZ3UOwmYHO00I2ezDf9GPwsjg"
+        "Ref": "ContactDashdeleteLambdaVersionZ6tDmn9C9u1RPN74b0gSdvqccMHs8h63VU7xtZCT8"
       }
     },
     "ServiceEndpoint": {
@@ -1502,7 +1502,7 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/test"
+            "/dev"
           ]
         ]
       }
